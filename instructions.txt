@@ -1,0 +1,15 @@
+Install Dependencies:
+
+Install pydrive using pip install pydrive.
+Follow the PyDrive Quickstart guide to set up your Google API credentials.
+Set Up Google API:
+
+Enable the Google Drive API in the Google Cloud Console.
+Download the client_secrets.json file and place it in the same directory as this script.
+Run the Script:
+
+Execute the script using python script_name.py.
+For the first run, you'll need to authenticate and authorize the script. Follow the prompts in the browser.
+Customize Backup Folder:
+
+By default, the script uploads files to the root directory of your Google Drive. Update the folder_id variable with your desired folder ID on Google Drive.
