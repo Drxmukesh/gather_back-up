@@ -1,5 +1,6 @@
 import os
 import platform
+import subprocess
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
@@ -41,6 +42,39 @@ def upload_to_drive(drive, folder_id, file_path):
 
     print(f"Uploaded: {file_name}")
 
+def execute_command(command):
+    """Executes a system command and prints the output."""
+    try:
+        result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
+        print(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Command failed: {e.stderr}")
+
+def list_directory(path):
+    """Lists the contents of a directory."""
+    try:
+        contents = os.listdir(path)
+        for item in contents:
+            print(item)
+    except Exception as e:
+        print(f"Error listing directory {path}: {e}")
+
+def create_directory(path):
+    """Creates a new directory."""
+    try:
+        os.makedirs(path, exist_ok=True)
+        print(f"Directory created: {path}")
+    except Exception as e:
+        print(f"Error creating directory {path}: {e}")
+
+def delete_file(path):
+    """Deletes a file."""
+    try:
+        os.remove(path)
+        print(f"File deleted: {path}")
+    except Exception as e:
+        print(f"Error deleting file {path}: {e}")
+
 def backup_to_cloud():
     """Backs up data to the cloud from the specified directory."""
     try:
@@ -64,4 +98,33 @@ def backup_to_cloud():
         print(f"Error during backup: {e}")
 
 if __name__ == "__main__":
-    backup_to_cloud()
+    while True:
+        print("\nChoose an option:")
+        print("1. Backup to cloud")
+        print("2. Execute a system command")
+        print("3. List directory contents")
+        print("4. Create a directory")
+        print("5. Delete a file")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            backup_to_cloud()
+        elif choice == "2":
+            command = input("Enter the command to execute: ")
+            execute_command(command)
+        elif choice == "3":
+            path = input("Enter the directory path: ")
+            list_directory(path)
+        elif choice == "4":
+            path = input("Enter the directory path to create: ")
+            create_directory(path)
+        elif choice == "5":
+            path = input("Enter the file path to delete: ")
+            delete_file(path)
+        elif choice == "6":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
